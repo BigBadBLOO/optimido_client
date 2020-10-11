@@ -1,0 +1,17 @@
+.footer{
+  margin: 10px 0 0 0!important;
+  padding: 20px;
+  //color: $textGray;
+  box-shadow: 0 0 0 0.4px rgba(0,0,0,0.3);
+}
+.rightBorder{
+  border-right: 1px solid rgba(180, 180, 191, .5);
+}
+.hrefToSource{
+  //color: $textGray;
+  cursor: pointer;
+  &:hover{
+    //color: $textGray;
+    text-decoration: none!important;
+  }
+}

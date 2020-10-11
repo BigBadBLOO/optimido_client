@@ -1,0 +1,58 @@
+.commonContainer {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  hr {
+    margin: 0;
+  }
+  .name {
+    font-size: 24px;
+    margin: 20px;
+    font-weight: bold;
+  }
+  .buttonGroup {
+    margin: 20px;
+    button {
+      margin: 0 10px;
+    }
+  }
+  .priceTitle {
+    font-size: 14px;
+    color: GrayText;
+  }
+  .price{
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+}
+.headerContainer {
+  white-space: nowrap;
+  overflow-x: auto;
+}
+.headerElem {
+  padding: 20px;
+  display: inline-block;
+  vertical-align: top;
+  //color: $textGray;
+  height: 120px;
+  span{
+    font-size: 12px;
+    //color: $gold;
+    background-color: rgba(224,187,135,0.2);
+    padding: 3px;
+    border-radius: 3px;
+  }
+  i {
+    //color: $gold;
+    font-size: 32px;
+  }
+  &.activeModule{
+    //border-bottom: 1px solid  $gold;
+    div{
+      //font-weight: bold;
+      color: black;
+    }
+    i {
+      //color: $gold;
+    }
+  }
+}

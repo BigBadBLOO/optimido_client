@@ -1,0 +1,100 @@
+.bodyStyle{
+  background-color: #F7F7FA;
+  height: 100%;
+  padding: 20px;
+}
+.blockMargin {
+  margin-top: 100px;
+}
+
+.margin-top-20 {
+  margin: 20px 0 0 0 !important;
+}
+
+.margin-top-10 {
+  margin: 10px 0 0 0 !important;
+}
+
+.spanAsH1 {
+  font-weight: Bold;
+  font-size: 40px;
+  text-align: center !important;
+}
+
+.spanAsH2 {
+  font-weight: Bold;
+  font-size: 32px;
+  text-align: center !important;
+}
+
+.spanAsH3 {
+  font-weight: Bold;
+  font-size: 24px;
+  text-align: center !important;
+}
+
+@media screen and (max-width: 480px) {
+  .spanAsH1 {
+    font-size: 27px;
+  }
+}
+
+.description {
+  font-size: 22px;
+  //color: $textGray;
+}
+
+.description-small {
+  //color: $textGray;
+}
+
+.possibilityBlock {
+  margin-top: 20px;
+  padding: 0 40px;
+
+  i {
+    //color: $gold;
+    font-size: 48px;
+  }
+
+  div {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 10px 0;
+  }
+}
+
+.possibilityBlockMargin {
+  padding: 0 40px;
+}
+
+.myCard {
+  margin: 10px;
+  padding: 30px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+
+  span.name {
+    margin: 20px 0;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  div.description-small {
+    margin: 20px 0;
+  }
+
+  hr {
+    width: 40px;
+    //border: 1px solid $gold;
+  }
+}
+
+.buttonCollapse {
+  background: #8BA63A;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  width: 100%;
+  padding: 5px;
+}
