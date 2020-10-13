@@ -1,36 +1,36 @@
-import Button from "../../Button/Button";
-import dashboard from "../../../images/dashboard.png";
 import React from "react";
-import './BodyForNonAuthUser.scss'
-import MakePlatform from "./utils/MakePlatform/MakePlatform";
+
+import Button from "../../Button/Button";
+import dashboard from "../../../images/dashboard.svg";
+import MakePlatform from "./utils/MakePlatform";
 
 
-function BodyForNonAuthUser(props) {
+function BodyForNonAuthUser() {
   return (
     <div>
-      <div className="text-center m-3 mt-20 text-3xl md:text-4xl font-bold">
+      <div className="text-center m-3 mt-20 text-2xl md:text-4xl font-bold md:leading-10">
         <span className="">Платформа для оптимизации работы <br/> с интернет-рекламой</span>
       </div>
 
-      <div className="text-center m-3 mt-4">
+      <div className="text-center m-3 mt-4 font-normal">
         <span className="text-gray-600 text-lg">Автоматизируйте рутиные задачи, систематизируйте бизнес-процессы <br/> и отслеживайте эффективность интернет-рекламы</span>
       </div>
 
       <div className="flex justify-center m-3 mt-4">
-        <Button classes="rounded bg-gold text-white text-1x p-1 focus:outline-none" text="Попробовать бесплатно"/>
+        <Button type="primary" text="Попробовать бесплатно"/>
       </div>
 
-      <div className="text-center m-3 mt-4">
+      <div className="text-center m-3">
         <span className="text-gray-600 text-sm"> 14 дней пробный период</span>
       </div>
 
-      <div className="flex justify-center m-3 mt-10 px-5">
-        <img src={dashboard} className="w-full md:w-10/12" alt="dashboard"/>
+      <div className="flex justify-center m-3 mt-10">
+        <img src={dashboard} className="w-full" alt="dashboard"/>
       </div>
 
 
       <div
-        className="flex justify-center mx-auto mt-10 px-5 md:px-20 md:max-w-screen-md grid grid-cols-1 md:grid-cols-2 gap-2">
+        className="flex justify-center mx-auto mt-4 px-5 md:max-w-screen-md grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="md:col-span-2">
           <span className="my-10 text-2xl md:text-2xl font-bold ">Возможности для ваших задач</span>
         </div>
@@ -71,7 +71,7 @@ function BodyForNonAuthUser(props) {
           <hr className="w-20 my-5 mx-auto border border-gold"/>
           <span className="font-bold text-lg">от 10 ₽ <br/><small> в день</small></span>
           <div className="flex justify-center my-4">
-            <Button classes="rounded bg-gold text-white text-1x p-1 focus:outline-none" text="Попробовать"/>
+            <Button type="primary" text="Попробовать"/>
           </div>
           <span className="text-sm text-gray-600"> 14 дней бесплатно</span>
         </div>
@@ -81,7 +81,7 @@ function BodyForNonAuthUser(props) {
           <hr className="w-10 my-5 mx-auto border border-gold"/>
           <span className="font-bold text-lg">от 20 ₽ <br/><small> в день</small></span>
           <div className="flex justify-center my-4">
-            <Button classes="rounded bg-gold text-white text-1x p-1 focus:outline-none" text="Попробовать"/>
+            <Button type="primary" text="Попробовать"/>
           </div>
           <span className="text-sm text-gray-600"> 14 дней бесплатно</span>
         </div>
@@ -91,7 +91,7 @@ function BodyForNonAuthUser(props) {
           <hr className="w-10 my-5 mx-auto border border-gold"/>
           <span className="font-bold text-lg">от 30 ₽ <br/><small> в день</small></span>
           <div className="flex justify-center my-4">
-            <Button classes="rounded bg-gold text-white text-1x p-1 focus:outline-none" text="Попробовать"/>
+            <Button type="primary" text="Попробовать"/>
           </div>
           <span className="text-sm text-gray-600"> 14 дней бесплатно</span>
         </div>
@@ -101,7 +101,7 @@ function BodyForNonAuthUser(props) {
           <hr className="w-10 my-5 mx-auto border border-gold"/>
           <span className="font-bold text-lg">от 40 ₽ <br/><small> в день</small></span>
           <div className="flex justify-center my-4">
-            <Button classes="rounded bg-gold text-white text-1x p-1 focus:outline-none" text="Попробовать"/>
+            <Button type="primary" text="Попробовать"/>
           </div>
           <span className="text-sm text-gray-600"> 14 дней бесплатно</span>
         </div>

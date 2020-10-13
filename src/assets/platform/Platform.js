@@ -33,19 +33,7 @@ function Platform({match, setPlatform}) {
       name: idPlatform
     }, answer)
 
-
-    // requestPost(urls.serverUrl + urls.getPlatformInfo, {
-    //     'name': idPlatform
-    //   },
-    //   (data) => {
-    //     console.log(data)
-    //     setCookie('token', data.token, {path: '/', });
-    //   },
-    //   (e) => {
-    //     console.log(e)
-    //   }
-    // )
-  }, [idPlatform, activePage])
+  }, [idPlatform, pathToPlatform, setPlatform, activePage])
 
   // статический список
   const navMenu = [

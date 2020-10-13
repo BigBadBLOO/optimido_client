@@ -1,19 +1,18 @@
 import React, {useState} from "react"
-import Button from "../../Button/Button"
 import {connect} from "react-redux";
-import ModalButtonForContent from "./ModalButtonForContent";
-import {loginUser} from "../../../redux/actions/actions";
-import {useCookies} from 'react-cookie';
-import {requestPost} from "../../../core/utils";
 import PropTypes from "prop-types";
 
-function ModalBodyForLogin({urls, loginUser}) {
+import ModalButtonForContent from "./ModalButtonForContent";
+import {loginUser} from "../../../redux/actions/actions";
+import Button from "../../Button/Button"
+import workWithServer from "../../../core/workWithServer";
+
+function ModalBodyForLogin({loginUser}) {
 
   const [email, setEmail] = useState('');
   const [validEmail, setValidEmail] = useState(true);
   const [password, setPassword] = useState('');
   const [validPassword, setValidPassword] = useState(true);
-  const [, setCookie] = useCookies(['']);
 
   const login = (e) => {
     e.preventDefault()
@@ -23,17 +22,10 @@ function ModalBodyForLogin({urls, loginUser}) {
     setValidPassword(password)
 
     if (validEmail && validPassword) {
-      requestPost(urls.serverUrl + urls.login, {
-          "email": email,
-          "password": password
-        },
-        (data) => {
-          const user = data
-          loginUser(user)
-          setCookie('token', user.token, {path: '/', maxAge: 1800});
-        },
-        () => setValidEmail(false)
-      )
+      workWithServer.login({
+        "email": email,
+        "password": password
+      }, loginUser, () => setValidEmail(false))
     }
 
   }
@@ -79,8 +71,8 @@ function ModalBodyForLogin({urls, loginUser}) {
         <div className="mb-2">
           <span>Забыли пароль?</span>
         </div>
-        <div className="mb-2">
-          <Button classes="rounded w-full bg-gold text-white text-1x py-1 focus:outline-none" text="Войти в аккаунт" type="submit"/>
+        <div className="mb-2 text-center">
+          <Button text="Войти в аккаунт" type="primary"/>
         </div>
       </form>
     </div>
@@ -88,15 +80,8 @@ function ModalBodyForLogin({urls, loginUser}) {
 }
 
 ModalBodyForLogin.propTypes = {
-  urls: PropTypes.object,
   loginUser: PropTypes.func,
 };
-
-function mapStateToProps(state) {
-  return {
-    urls: state.urls,
-  }
-}
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -104,4 +89,4 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ModalBodyForLogin)
+export default connect(null, mapDispatchToProps)(ModalBodyForLogin)

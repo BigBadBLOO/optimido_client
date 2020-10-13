@@ -1,14 +1,15 @@
 import React, {useEffect} from 'react';
+import {Route} from 'react-router-dom'
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
-import {Route} from 'react-router-dom'
-import {initUser} from "./redux/actions/actions";
-import request from "./core/utils";
-import Home from "./assets/home/Home";
-import {useCookies} from "react-cookie";
 
+import {initUser} from "./redux/actions/actions";
+import Home from "./assets/home/Home";
 import Platform from "./assets/platform/Platform";
-import './App.scss';
+import workWithServer from "./core/workWithServer";
+
+import GlobalLoader from "./components/Loader/Loader";
+
 function Nav() {
   return (
     <div>
@@ -25,45 +26,23 @@ function Nav() {
   )
 }
 
-function Loader() {
-  return (
-    <div className="preloader">
-      <div className="preloader__loader">
-        <div className="spinner-grow text-danger" role="status" style={{width: '4rem', height: '4rem'}}>
-          <span className="sr-only">Загрузка...</span>
-        </div>
-      </div>
-    </div>
-  )
-}
+function App({user, initUser}) {
 
-function App(props) {
-  const urls = props.urls
-  const [cookies,] = useCookies(['token']);
   useEffect(() => {
-      request(urls.serverUrl + urls.initializeUser, {
-          method: 'GET',
-          headers: {
-            Authorization: `JWT ${cookies.token}`
-          },
-        },
-        (data) => props.initUser(data),
-        () => props.initUser({email: ''}))
-    },
-    ['cookies.token']
+    workWithServer.initUser(initUser, () => {initUser({email: ''})})
+    },[initUser]
   )
 
   return (
-    props.user.isInitial
+    user.isInitial
       ? <Nav/>
-      : <Loader/>
+      : <GlobalLoader/>
   )
 }
 
 function mapStateToProps(state) {
   return {
     user: state.user,
-    urls: state.urls,
   }
 }
 
@@ -73,11 +52,9 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
+export default connect(mapStateToProps, mapDispatchToProps)(App);
+
 App.propTypes = {
   user: PropTypes.object,
   initUser: PropTypes.func,
-  setModalBody: PropTypes.func,
-  setModalFooter: PropTypes.func,
-  urls: PropTypes.object,
 };
-export default connect(mapStateToProps, mapDispatchToProps)(App);

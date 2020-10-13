@@ -1,14 +1,13 @@
 import React, {useState} from "react"
-import Button from "../../Button/Button"
 import {connect} from "react-redux";
-import ModalButtonForContent from "./ModalButtonForContent";
-import {loginUser} from "../../../redux/actions/actions";
-import {useCookies} from 'react-cookie';
-import {requestPost} from "../../../core/utils";
 import PropTypes from "prop-types";
 
-function ModalBodyForSignUp(props) {
-  const urls = props.urls
+import Button from "../../Button/Button"
+import ModalButtonForContent from "./ModalButtonForContent";
+import {loginUser} from "../../../redux/actions/actions";
+import workWithServer from "../../../core/workWithServer";
+
+function ModalBodyForSignUp({loginUser}) {
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -18,8 +17,6 @@ function ModalBodyForSignUp(props) {
   const [validEmail, setValidEmail] = useState(true);
   const [validPassword, setValidPassword] = useState(true);
   const [validPassword2, setValidPassword2] = useState(true);
-
-  const [, setCookie] = useCookies(['']);
 
   const signUp = (e) => {
     e.preventDefault()
@@ -34,21 +31,14 @@ function ModalBodyForSignUp(props) {
     setValidPassword2(validPassword2)
 
     if (validEmail && validPassword) {
-      requestPost(urls.serverUrl + urls.signUp, {
-          "name": name,
-          "email": email,
-          "password": password
-        },
-        (data) => {
-          const user = data
-          props.loginUser(user)
-          setCookie('token', user.token, {path: '/', maxAge: 1800});
-        },
-        () => setValidEmail(false)
-      )
+      workWithServer.signUp({
+        "name": name,
+        "email": email,
+        "password": password
+      }, loginUser, () => setValidEmail(false))
     }
-
   }
+
   return (
     <div>
       <ModalButtonForContent type='signUp'/>
@@ -126,9 +116,8 @@ function ModalBodyForSignUp(props) {
         <div className="mb-4">
           <span>Забыли пароль?</span>
         </div>
-        <div className="mb-4">
-          <Button classes="rounded w-full bg-gold text-white text-1x py-1 focus:outline-none" text="Зарегистрироваться"
-                  type="submit"/>
+        <div className="mb-4 text-center">
+          <Button text="Зарегистрироваться" type="primary"/>
         </div>
       </form>
 
@@ -137,15 +126,8 @@ function ModalBodyForSignUp(props) {
 }
 
 ModalBodyForSignUp.propTypes = {
-  urls: PropTypes.object,
   loginUser: PropTypes.func,
 };
-
-function mapStateToProps(state) {
-  return {
-    urls: state.urls,
-  }
-}
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -153,4 +135,4 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ModalBodyForSignUp)
+export default connect(null, mapDispatchToProps)(ModalBodyForSignUp)

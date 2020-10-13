@@ -1,25 +1,21 @@
 import React from "react";
 import {Link} from "react-router-dom"
-import {Col, Row} from "react-bootstrap";
-import './footer.scss'
 
-function Footer(props) {
+function Footer() {
   return (
-    <Row className='footer'>
-      <Col>OPTIMIDO</Col>
-      <Col md="auto" className="d-none d-lg-block">
-        <Link className="hrefToSource" to="/userAgreement/">
-          <span className="anchor">Пользовательское соглашение</span>
+    <div className='mt-2 p-5 shadow-md flex justify-between content-start'>
+      <p className="text-gray-600 my-auto">OPTIMIDO</p>
+      <div className="order-first grid md:block md:order-none text-gray text-center md:divide-x md:divide-gray-400">
+        <Link to="/userAgreement/">
+          <span className="text-gray-600 mx-2">Пользовательское соглашение</span>
         </Link>
-        <span className="rightBorder"/>
-        <Link className="hrefToSource" to="/privacyPolicy/">
-          <span className="anchor">Политика конфиденциальности</span>
+        <Link to="/privacyPolicy/">
+          <span className="text-gray-600 mx-2">Политика конфиденциальности</span>
         </Link>
-      </Col>
-      <Col>
-        <span className="float-right">@ 2020 Optimido</span>
-      </Col>
-    </Row>
+      </div>
+
+      <p className="text-right text-gray-600 my-auto">@ 2020 Optimido</p>
+    </div>
   )
 }
 

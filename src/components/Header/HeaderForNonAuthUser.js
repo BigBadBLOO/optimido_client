@@ -1,33 +1,34 @@
 import React from "react";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
-import {loginUser, setModalBody, setModalFooter, setModalHeader, showModal} from "../../redux/actions/actions";
-import ModalBodyForLogin from "./utils/ModalBodyForLogin";
-import ModalHeader from "./utils/ModalHeader";
-import ModalBodyForSignUp from "./utils/ModalBodyForSignUp";
-import logo from "../../images/logo.png";
 
-function HeaderForNonAuthUser(props) {
+import {loginUser, setModalBody, setModalHeader, showModal} from "../../redux/actions/actions";
+import ModalHeader from "./utils/ModalHeader";
+import ModalBodyForLogin from "./utils/ModalBodyForLogin";
+import ModalBodyForSignUp from "./utils/ModalBodyForSignUp";
+import Logo from "../Logo/Logo";
+
+function HeaderForNonAuthUser({setModalHeader, setModalBody, showModal}) {
 
   const login = () => {
-    props.setModalHeader(<ModalHeader/>)
-    props.setModalBody(<ModalBodyForLogin/>)
-    props.showModal()
+    setModalHeader(<ModalHeader/>)
+    setModalBody(<ModalBodyForLogin/>)
+    showModal()
   }
   const signUp = () => {
-    props.setModalHeader(<ModalHeader/>)
-    props.setModalBody(<ModalBodyForSignUp/>)
-    props.showModal()
+    setModalHeader(<ModalHeader/>)
+    setModalBody(<ModalBodyForSignUp/>)
+    showModal()
   }
   return (
-    <div className="relative overflow-hidden flex items-center justify-between p-4">
-      <img className="h-12 w-48" src={logo} alt="logo"/>
-      <div className="hidden md:inline-block">
+    <div className="p-4 flex justify-between">
+      <Logo/>
+      <div className="hidden md:flex ml-32 items-center">
         <span className="px-2 cursor-pointer">Возможности</span>
         <span className="px-2 cursor-pointer">Тарифы</span>
         <span className=" px-2 cursor-pointer">Собрать платформу</span>
       </div>
-      <div className="">
+      <div className="flex justify-end items-center">
         <span className="text-gold px-2 cursor-pointer" onClick={login}>Вход</span>
         <span className="text-gold px-2 cursor-pointer" onClick={signUp}>Регистрация</span>
       </div>
@@ -35,19 +36,8 @@ function HeaderForNonAuthUser(props) {
   )
 }
 
-HeaderForNonAuthUser.propTypes = {
-  showModal: PropTypes.func,
-  setModalHeader: PropTypes.func,
-  setModalBody: PropTypes.func,
-  setModalFooter: PropTypes.func,
-  serverUrl: PropTypes.string,
-  tokenAuth: PropTypes.string
-};
-
-function mapStateToProps(state) {
+function mapStateToProps() {
   return {
-    serverUrl: state.urls.serverUrl,
-    tokenAuth: state.urls.tokenAuth
   }
 }
 
@@ -56,9 +46,14 @@ function mapDispatchToProps(dispatch) {
     showModal: () => dispatch(showModal()),
     setModalHeader: (elem) => dispatch(setModalHeader(elem)),
     setModalBody: (elem) => dispatch(setModalBody(elem)),
-    setModalFooter: (elem) => dispatch(setModalFooter(elem)),
     loginUser: (user) => dispatch(loginUser(user)),
   }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(HeaderForNonAuthUser)
+
+HeaderForNonAuthUser.propTypes = {
+  showModal: PropTypes.func,
+  setModalHeader: PropTypes.func,
+  setModalBody: PropTypes.func,
+};

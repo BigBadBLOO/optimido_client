@@ -2,18 +2,17 @@ const  workWithServer = () => {
   const server_url = 'http://localhost:8000'
 
   return {
-    initUser: () => {
-      request(server_url + '/api/current_user/', {
-          method: 'GET',
-          headers: {
-            Authorization: `JWT ${getCookie('token')}`
-          },
-        },
-        (data) => (data),
-        () => ({email: ''}))
+    initUser: (successFn, errorFn) => {
+      return requestGet(server_url + '/api/current_user/', successFn, errorFn)
     },
-    getPlatformInfo: (data, successFn) => {
-      return requestPost(server_url + '/api/getPlatformInfo/', data, successFn)
+    login: (data, successFn, errorFn) => {
+      return requestPost(server_url + '/api/login/', data, successFn, errorFn)
+    },
+    signUp: (data, successFn, errorFn) => {
+      return requestPost(server_url + '/api/signUp/', data, successFn, errorFn)
+    },
+    getPlatformInfo: (data, successFn, errorFn) => {
+      return requestPost(server_url + '/api/getPlatformInfo/', data, successFn, errorFn)
     }
   }
 }
@@ -37,13 +36,29 @@ function request(url, body, successFn, errorFn) {
   fetch(url, body).then(status).then(json).then(successFn).catch(errorFn);
 }
 
-function requestPost(url, data, successFn, errorFn) {
+function requestGet(url, successFn, errorFn) {
   request(url, {
-    method: 'POST',
+    method: 'GET',
     headers: {
-      'Content-Type': 'application/json',
       'Authorization': `JWT ${getCookie('token')}`
     },
+  }, (data) => {
+    setCookie('token', data.token)
+    return successFn(data)
+  }, errorFn)
+}
+
+function requestPost(url, data, successFn, errorFn) {
+  const headers = {
+    'Content-Type': 'application/json',
+  }
+  if(getCookie('token'))
+  {
+    headers['Authorization'] = `JWT ${getCookie('token')}`
+  }
+  request(url, {
+    method: 'POST',
+    headers: headers,
     body: JSON.stringify(data)
   }, (data) => {
     setCookie('token', data.token)
@@ -53,7 +68,7 @@ function requestPost(url, data, successFn, errorFn) {
 
 function getCookie(name) {
   let matches = document.cookie.match(new RegExp(
-    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+    "(?:^|; )" + name.replace(/([.$?*|{}()[]\/+^])/g, '\\$1') + "=([^;]*)"
   ))
   return matches ? decodeURIComponent(matches[1]) : undefined
 }

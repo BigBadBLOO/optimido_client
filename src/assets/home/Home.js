@@ -1,19 +1,18 @@
 import React from "react";
-import './home.scss'
+import {connect} from "react-redux";
+
 import MyModal from "../../components/Modal/Modal";
 import HeaderForNonAuthUser from "../../components/Header/HeaderForNonAuthUser";
 import HeaderForAuthUser from "../../components/Header/HeaderForAuthUser";
-import {connect} from "react-redux";
+
 import Footer from "../../components/Footer/Footer";
 import BodyForNonAuthUser from "../../components/Body/ForNonAuthUser/BodyForNonAuthUser";
 import BodyForAuthUser from "../../components/Body/ForAuthUser/BodyForAuthUser";
+import PropTypes from "prop-types";
 
-
-
-
-function Home(props) {
+function Home({user}) {
   return (
-    props.user.isAuth
+    user.isAuth
       ?
       <>
         <HeaderForAuthUser/>
@@ -42,3 +41,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)
+
+Home.propTypes = {
+  user: PropTypes.object,
+};
