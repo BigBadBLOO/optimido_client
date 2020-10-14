@@ -29,8 +29,8 @@ function Nav() {
 function App({user, initUser}) {
 
   useEffect(() => {
-    workWithServer.initUser(initUser, () => {initUser({email: ''})})
-    },[initUser]
+    workWithServer.initUser().then(initUser).catch(() => {initUser({email: ''})})
+    },[]
   )
 
   return (

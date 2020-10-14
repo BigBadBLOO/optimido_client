@@ -23,7 +23,7 @@ function HeaderForNonAuthUser({setModalHeader, setModalBody, showModal}) {
   return (
     <div className="p-4 flex justify-between">
       <Logo/>
-      <div className="hidden md:flex ml-32 items-center">
+      <div className="hidden md:flex md:ml-32 items-center justify-center">
         <span className="px-2 cursor-pointer">Возможности</span>
         <span className="px-2 cursor-pointer">Тарифы</span>
         <span className=" px-2 cursor-pointer">Собрать платформу</span>

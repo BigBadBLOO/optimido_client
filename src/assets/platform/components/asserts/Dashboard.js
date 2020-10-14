@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import Button from "../../../../components/Button/Button";
 import GridLayout from 'react-grid-layout';
 import Box from "../utils/LayoutComponents";
+import PropTypes from 'prop-types'
 
 function Dashboard({onToggleFullScreen}) {
 
@@ -35,4 +36,7 @@ function Dashboard({onToggleFullScreen}) {
   )
 }
 
+Dashboard.propTypes = {
+  onToggleFullScreen: PropTypes.func,
+};
 export default Dashboard

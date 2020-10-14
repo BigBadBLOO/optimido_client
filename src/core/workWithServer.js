@@ -1,18 +1,18 @@
-const  workWithServer = () => {
+const workWithServer = () => {
   const server_url = 'http://localhost:8000'
 
   return {
-    initUser: (successFn, errorFn) => {
-      return requestGet(server_url + '/api/current_user/', successFn, errorFn)
+    initUser: () => {
+      return requestGet(server_url + '/api/current_user/')
     },
-    login: (data, successFn, errorFn) => {
-      return requestPost(server_url + '/api/login/', data, successFn, errorFn)
+    login: (data) => {
+      return requestPost(server_url + '/api/login/', data)
     },
-    signUp: (data, successFn, errorFn) => {
-      return requestPost(server_url + '/api/signUp/', data, successFn, errorFn)
+    signUp: (data) => {
+      return requestPost(server_url + '/api/signUp/', data)
     },
-    getPlatformInfo: (data, successFn, errorFn) => {
-      return requestPost(server_url + '/api/getPlatformInfo/', data, successFn, errorFn)
+    getPlatformInfo: (data) => {
+      return requestPost(server_url + '/api/getPlatformInfo/', data)
     }
   }
 }
@@ -22,48 +22,38 @@ export default workWithServer()
 
 function status(response) {
   if (response.status >= 200 && response.status < 300) {
-    return Promise.resolve(response)
+    return Promise.resolve(response.json())
   } else {
     return Promise.reject(new Error(response.statusText))
   }
 }
 
-function json(response) {
-  return response.json()
+async function request(url, body) {
+  const response = await fetch(url, body).then(status)
+  response.token && setCookie('token', response.token)
+  return response;
 }
 
-function request(url, body, successFn, errorFn) {
-  fetch(url, body).then(status).then(json).then(successFn).catch(errorFn);
-}
-
-function requestGet(url, successFn, errorFn) {
-  request(url, {
+async function requestGet(url) {
+  const headers = {}
+  getCookie('token') && (headers['Authorization'] = `JWT ${getCookie('token')}`)
+  return await request(url, {
     method: 'GET',
-    headers: {
-      'Authorization': `JWT ${getCookie('token')}`
-    },
-  }, (data) => {
-    setCookie('token', data.token)
-    return successFn(data)
-  }, errorFn)
+    headers: headers,
+  })
 }
 
-function requestPost(url, data, successFn, errorFn) {
+async function requestPost(url, data) {
   const headers = {
     'Content-Type': 'application/json',
   }
-  if(getCookie('token'))
-  {
-    headers['Authorization'] = `JWT ${getCookie('token')}`
-  }
-  request(url, {
+  getCookie('token') && (headers['Authorization'] = `JWT ${getCookie('token')}`)
+
+  return await request(url, {
     method: 'POST',
     headers: headers,
     body: JSON.stringify(data)
-  }, (data) => {
-    setCookie('token', data.token)
-    return successFn(data)
-  }, errorFn)
+  })
 }
 
 function getCookie(name) {
@@ -73,7 +63,7 @@ function getCookie(name) {
   return matches ? decodeURIComponent(matches[1]) : undefined
 }
 
-const setCookie = (name, value, props = {'Path':'/', maxAge: 1800}) => {
+const setCookie = (name, value, props = {'Path': '/', maxAge: 1800}) => {
   let exp = props.expires
   if (typeof exp == "number" && exp) {
     let d = new Date()
@@ -97,6 +87,3 @@ const setCookie = (name, value, props = {'Path':'/', maxAge: 1800}) => {
 
   document.cookie = updatedCookie
 }
-
-
-

@@ -1,20 +1,20 @@
 import React from "react";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
-import {Col} from "react-bootstrap";
-import './header.scss'
 
-import Badge from "react-bootstrap/Badge";
+// import './header.scss'
+
 import {cancelConfirmEmail} from "../../redux/actions/actions";
 import Logo from "../Logo/Logo";
 
-function HeaderForNonAuthUser(props) {
-  const user = props.user
+
+function HeaderForNonAuthUser({user, cancelConfirmEmail}) {
+
   return (
     <>
       {!user.emailIsConfirm &&
       <div className="confirmEmail">Подтвердите адрес электронной почты
-        <span className="float-right margin-border-10" onClick={props.cancelConfirmEmail}>x</span>
+        <span className="float-right margin-border-10" onClick={cancelConfirmEmail}>x</span>
       </div>}
       <div className="header margin-border-10">
 
@@ -30,7 +30,7 @@ function HeaderForNonAuthUser(props) {
           <span className="nav-header d-none d-sm-inline">
             <span className="material-icons icons">account_balance_wallet</span>
             <span>{user.balance} ₽</span>
-          <Badge variant="secondary">14 дн.</Badge>
+          <div variant="secondary">14 дн.</div>
         </span>
           <span className="divider margin-border-10 d-none d-sm-inline"/>
           <span className="nav-header">
@@ -41,24 +41,18 @@ function HeaderForNonAuthUser(props) {
           <span className="circle">{user.name[0]}</span>
           </span>
         </div>
-        <Col>
-          {/*<span className="modalOpen float-right" onClick={}>Вход</span>*/}
-          {/*<span className="modalOpen float-right" onClick={}>Регистрация</span>*/}
-        </Col>
       </div>
     </>
   )
 }
 
 HeaderForNonAuthUser.propTypes = {
-  serverUrl: PropTypes.string,
-  tokenAuth: PropTypes.string
+  user: PropTypes.object,
+  cancelConfirmEmail: PropTypes.func,
 };
 
 function mapStateToProps(state) {
   return {
-    serverUrl: state.urls.serverUrl,
-    tokenAuth: state.urls.tokenAuth,
     user: state.user
   }
 }
