@@ -25,7 +25,7 @@ function ModalBodyForLogin({loginUser}) {
       workWithServer.login({
         "email": email,
         "password": password
-      }, loginUser, () => setValidEmail(false))
+      }).then(loginUser).catch(() => setValidEmail(false))
     }
 
   }

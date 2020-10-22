@@ -1,4 +1,4 @@
-import {ShowModal, SetModalHeader, SetModalBody, SetModalFooter} from "../actions/actionsType";
+import {ShowModal, SetModalHeader, SetModalBody} from "../actions/actionsType";
 
 const initialState = {
   show: false,
@@ -15,8 +15,6 @@ export default function modal(state = initialState, action) {
       return { ...state, header: action.elem };
     case SetModalBody:
       return { ...state, body: action.elem };
-    case SetModalFooter:
-      return { ...state, footer: action.elem };
     default:
       return state
   }

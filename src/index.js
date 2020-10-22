@@ -9,16 +9,13 @@ import {Provider} from 'react-redux'
 import rootReducer from "./redux/rootReducer";
 
 import './tailwind.output.css';
-import { CookiesProvider } from 'react-cookie';
 
 const store = createStore(rootReducer)
 
 const application = (
   <Provider store={store}>
     <BrowserRouter>
-      <CookiesProvider>
-        <App />
-      </CookiesProvider>
+      <App/>
     </BrowserRouter>
   </Provider>
 )

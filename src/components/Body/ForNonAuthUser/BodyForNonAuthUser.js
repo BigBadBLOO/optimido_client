@@ -3,12 +3,31 @@ import React from "react";
 import Button from "../../Button/Button";
 import dashboard from "../../../images/dashboard.svg";
 import MakePlatform from "./utils/MakePlatform";
+import {connect} from "react-redux";
+import PropTypes from "prop-types";
 
+function BodyForNonAuthUser({tariff, refToPossibility, refToTariff, refToModules}) {
 
-function BodyForNonAuthUser() {
+  const blockTariff = []
+
+  for(let key in tariff){
+    const elem = tariff[key];
+    blockTariff.push(
+       <div className="m-3 p-6 text-center shadow md:w-54" key={key}>
+        <span className="font-semibold  text-3xl">{elem.count}</span>
+        <p className="text-gray-600 w-48 md:w-auto text-sm">Работа в сервисе <br/>до {elem.count} лидов в месяц</p>
+        <hr className="w-20 my-5 mx-auto border border-gold"/>
+        <span className="font-semibold">от {elem.payment} ₽ <br/><small> в день</small></span>
+        <div className="flex justify-center my-4">
+          <Button type="primary" text="Попробовать"/>
+        </div>
+        <span className="text-sm text-gray-600"> 14 дней бесплатно</span>
+      </div>
+    )
+  }
+
   return (
     <div>
-
       <p className="text-center m-3 mt-20 text-2xl md:text-4xl font-bold md:leading-10">
         Платформа для оптимизации работы <br className="hidden md:block"/> с интернет-рекламой
       </p>
@@ -18,15 +37,17 @@ function BodyForNonAuthUser() {
       </p>
 
       <div className="flex justify-center m-3 mt-4">
-        <Button type="primary" text="Попробовать бесплатно"/>
+        <Button type="primary" text="Попробовать бесплатно" onClick={() => refToModules.current.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        })}/>
       </div>
 
       <p className="text-center m-3 text-gray-600 text-sm font-medium"> 14 дней пробный период</p>
 
       <img src={dashboard} className="w-full flex mx-auto mt-10" alt="dashboard"/>
 
-      <div
-        className="flex justify-center mx-auto px-5 md:max-w-screen-md grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div ref={refToPossibility} className="flex justify-center mx-auto px-5 md:max-w-screen-md grid grid-cols-1 md:grid-cols-2 gap-4">
 
         <p className="my-4 text-2xl md:text-3xl font-bold md:col-span-2">Возможности для ваших задач</p>
 
@@ -57,52 +78,13 @@ function BodyForNonAuthUser() {
         </div>
       </div>
 
-      <p className="m-3 mt-10 text-center text-3xl font-bold">Тарифы</p>
+      <p ref={refToTariff} className="m-3 mt-10 text-center text-3xl font-bold">Тарифы</p>
 
       <div className="flex flex-no-wrap md:justify-center overflow-x-auto mt-10 mx-5">
-        <div className="m-3 p-6 text-center shadow md:w-54">
-          <span className="font-semibold  text-3xl">1000</span>
-          <p className="text-gray-600 w-48 md:w-auto text-sm">Работа в сервисе <br/>до 1 000 лидов в месяц</p>
-          <hr className="w-20 my-5 mx-auto border border-gold"/>
-          <span className="font-semibold">от 10 ₽ <br/><small> в день</small></span>
-          <div className="flex justify-center my-4">
-            <Button type="primary" text="Попробовать"/>
-          </div>
-          <span className="text-sm text-gray-600"> 14 дней бесплатно</span>
-        </div>
-        <div className="m-3 p-6 text-center shadow md:w-54">
-          <span className="font-semibold  text-3xl">2000</span>
-          <p className="text-gray-600 w-48 md:w-auto  text-sm">Работа в сервисе <br/>до 2 000 лидов в месяц</p>
-          <hr className="w-10 my-5 mx-auto border border-gold"/>
-          <span className="font-semibold">от 20 ₽ <br/><small> в день</small></span>
-          <div className="flex justify-center my-4">
-            <Button type="primary" text="Попробовать"/>
-          </div>
-          <span className="text-sm text-gray-600"> 14 дней бесплатно</span>
-        </div>
-        <div className="m-3 p-6 text-center shadow md:w-54">
-          <span className="font-semibold  text-3xl">3000</span>
-          <p className="text-gray-600 w-48 md:w-auto text-sm">Работа в сервисе <br/>до 3 000 лидов в месяц</p>
-          <hr className="w-10 my-5 mx-auto border border-gold"/>
-          <span className="font-semibold">от 30 ₽ <br/><small> в день</small></span>
-          <div className="flex justify-center my-4">
-            <Button type="primary" text="Попробовать"/>
-          </div>
-          <span className="text-sm text-gray-600"> 14 дней бесплатно</span>
-        </div>
-        <div className="m-3 p-6 text-center shadow md:w-54">
-          <span className="font-semibold  text-3xl">4000</span>
-          <p className="text-gray-600 w-48 md:w-auto text-sm">Работа в сервисе <br/>до 4 000 лидов в месяц</p>
-          <hr className="w-10 my-5 mx-auto border border-gold"/>
-          <span className="font-semibold">от 40 ₽ <br/><small> в день</small></span>
-          <div className="flex justify-center my-4">
-            <Button type="primary" text="Попробовать"/>
-          </div>
-          <span className="text-sm text-gray-600"> 14 дней бесплатно</span>
-        </div>
+        {blockTariff.length > 0 ? blockTariff : <span>Loading...</span>}
       </div>
 
-      <p className="mx-3 mt-10 text-center text-3xl font-bold">Соберите свою платформу</p>
+      <p ref={refToModules} className="mx-3 mt-10 text-center text-3xl font-bold">Соберите свою платформу</p>
 
       <p className="mx-3 text-center text-sm sm:text-base text-gray-600">Собирите платформу из необходимых модулей,
         которые подходят <br className="hidden md:block"/> конкретно под вашу деятельность
@@ -112,22 +94,19 @@ function BodyForNonAuthUser() {
         Не знаете какие модули вам нужны?
         <i className="material-icons float-right">keyboard_arrow_down</i>
       </p>
-
-
-      {/*<Accordion defaultActiveKey="1" className="margin-top-20">*/}
-      {/*  <Accordion.Toggle className="buttonCollapse" eventKey="0">*/}
-      {/*    Не знаете какие модули вам нужны?*/}
-      {/*    <i className="material-icons float-right">keyboard_arrow_down</i>*/}
-      {/*  </Accordion.Toggle>*/}
-      {/*  <Accordion.Collapse eventKey="0">*/}
-      {/*    <h1>Подсказка</h1>*/}
-      {/*  </Accordion.Collapse>*/}
-
-      {/*</Accordion>*/}
-
-      <MakePlatform/>
+      <MakePlatform />
     </div>
   )
 }
 
-export default BodyForNonAuthUser
+function mapStateToProps(state) {
+  return {
+    tariff: state.staticData.tariff,
+  }
+}
+
+export default connect(mapStateToProps)(BodyForNonAuthUser)
+
+BodyForNonAuthUser.propTypes = {
+  tariff: PropTypes.object,
+}

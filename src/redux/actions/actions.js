@@ -3,9 +3,8 @@ import {
   ShowModal,
   SetModalHeader,
   SetModalBody,
-  SetModalFooter,
   LoginUser,
-  CancelConfirmEmail, SetPlatform
+  CancelConfirmEmail, SetPlatform, InitStaticData, SetModule
 } from "./actionsType";
 
 export function cancelConfirmEmail() {
@@ -48,16 +47,23 @@ export function setModalBody(elem) {
   }
 }
 
-export function setModalFooter(elem) {
+export function setPlatform(elem) {
   return {
-    type: SetModalFooter,
+    type: SetPlatform,
     elem
   }
 }
 
-export function setPlatform(elem) {
+export function initStaticData(elem) {
   return {
-    type: SetPlatform,
+    type: InitStaticData,
+    elem
+  }
+}
+
+export function setModule(elem) {
+  return {
+    type: SetModule,
     elem
   }
 }

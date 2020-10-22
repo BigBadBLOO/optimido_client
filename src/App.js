@@ -3,7 +3,7 @@ import {Route} from 'react-router-dom'
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 
-import {initUser} from "./redux/actions/actions";
+import {initStaticData, initUser} from "./redux/actions/actions";
 import Home from "./assets/home/Home";
 import Platform from "./assets/platform/Platform";
 import workWithServer from "./core/workWithServer";
@@ -14,6 +14,8 @@ function Nav() {
   return (
     <div>
       <Route path="/" exact component={Home}/>
+      {/*Настройки пользователя*/}
+      <Route path="/settings/" exact component={Home}/>
       {/*демо версия платформы*/}
       <Route path="/demo/" exact component={Home}/>
       {/*пользовательское соглашение*/}
@@ -26,10 +28,14 @@ function Nav() {
   )
 }
 
-function App({user, initUser}) {
+function App({user, initUser, initStaticData}) {
 
   useEffect(() => {
-    workWithServer.initUser().then(initUser).catch(() => {initUser({email: ''})})
+    workWithServer.initUser().then(data => {
+      Object.keys(data).length > 0 ? initUser(data) : initUser(user)
+    }).catch(() => {initUser(user)})
+
+    workWithServer.initStaticData().then(initStaticData)
     },[]
   )
 
@@ -48,13 +54,15 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    initUser: user => dispatch(initUser(user))
+    initUser: user => dispatch(initUser(user)),
+    initStaticData: data => dispatch(initStaticData(data))
   }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
 
 App.propTypes = {
-  user: PropTypes.object,
-  initUser: PropTypes.func,
-};
+  initStaticData: PropTypes.func.isRequired,
+  initUser: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired
+}

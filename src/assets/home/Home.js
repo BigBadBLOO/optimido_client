@@ -11,6 +11,11 @@ import BodyForAuthUser from "../../components/Body/ForAuthUser/BodyForAuthUser";
 import PropTypes from "prop-types";
 
 function Home({user}) {
+
+  const refToPossibility = React.createRef();
+  const refToTariff = React.createRef();
+  const refToModules = React.createRef();
+
   return (
     user.isAuth
       ?
@@ -19,12 +24,13 @@ function Home({user}) {
         <BodyForAuthUser/>
       </>
       :
-      <>
-        <HeaderForNonAuthUser/>
-        <BodyForNonAuthUser/>
+
+      <div className="bg-white">
+        <HeaderForNonAuthUser refToPossibility={refToPossibility} refToTariff={refToTariff} refToModules={refToModules}/>
+        <BodyForNonAuthUser refToPossibility={refToPossibility} refToTariff={refToTariff} refToModules={refToModules}/>
         <Footer/>
         <MyModal/>
-      </>
+      </div>
   )
 }
 
@@ -36,7 +42,6 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
   return {
-    // loginUser: () => dispatch(loginUser()),
   }
 }
 

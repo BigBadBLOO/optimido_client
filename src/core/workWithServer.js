@@ -11,6 +11,9 @@ const workWithServer = () => {
     signUp: (data) => {
       return requestPost(server_url + '/api/signUp/', data)
     },
+    initStaticData: () => {
+      return requestGet(server_url + '/api/init_static_data/')
+    },
     getPlatformInfo: (data) => {
       return requestPost(server_url + '/api/getPlatformInfo/', data)
     }

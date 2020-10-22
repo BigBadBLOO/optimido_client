@@ -8,7 +8,7 @@ import ModalBodyForLogin from "./utils/ModalBodyForLogin";
 import ModalBodyForSignUp from "./utils/ModalBodyForSignUp";
 import Logo from "../Logo/Logo";
 
-function HeaderForNonAuthUser({setModalHeader, setModalBody, showModal}) {
+function HeaderForNonAuthUser({setModalHeader, setModalBody, showModal, refToPossibility, refToTariff, refToModules}) {
 
   const login = () => {
     setModalHeader(<ModalHeader/>)
@@ -24,9 +24,18 @@ function HeaderForNonAuthUser({setModalHeader, setModalBody, showModal}) {
     <div className="p-4 flex justify-between">
       <Logo/>
       <div className="hidden md:flex md:ml-32 items-center justify-center">
-        <span className="px-2 cursor-pointer">Возможности</span>
-        <span className="px-2 cursor-pointer">Тарифы</span>
-        <span className=" px-2 cursor-pointer">Собрать платформу</span>
+        <span className="px-2 cursor-pointer" onClick={() => refToPossibility.current.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        })}>Возможности</span>
+        <span className="px-2 cursor-pointer" onClick={() => refToTariff.current.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        })}>Тарифы</span>
+        <span className=" px-2 cursor-pointer" onClick={() => refToModules.current.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        })}>Собрать платформу</span>
       </div>
       <div className="flex justify-end items-center">
         <span className="text-gold px-2 cursor-pointer" onClick={login}>Вход</span>
@@ -37,8 +46,7 @@ function HeaderForNonAuthUser({setModalHeader, setModalBody, showModal}) {
 }
 
 function mapStateToProps() {
-  return {
-  }
+  return {}
 }
 
 function mapDispatchToProps(dispatch) {
